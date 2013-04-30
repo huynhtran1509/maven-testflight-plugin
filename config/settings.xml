@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/POM/4.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <localRepository>
+        /Users/joeuser/custom/path/to/mavenRepo
+    </localRepository>
+
+    <servers>
+        <server>
+            <id>wta.internal</id>
+            <username></username>
+            <password></password>
+        </server>
+        <server>
+            <id>wta.snapshots</id>
+            <username></username>
+            <password></password>
+        </server>
+    </servers>
+
+    <mirrors>
+        <mirror>
+            <id>wta.internal</id>
+            <mirrorOf>*,!wta.snapshots</mirrorOf>
+            <url>http://maven.willowtreeapps.com/repository/internal/</url>
+        </mirror>
+    </mirrors>
+    <profiles>
+
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <wta.repo.release>http://maven.willowtreeapps.com/repository/internal/</wta.repo.release>
+                <wta.repo.snapshot>http://maven.willowtreeapps.com/repository/snapshots/</wta.repo.snapshot>
+            </properties>
+            <repositories>
+                <repository>
+                    <id>wta.snapshots</id>
+                    <name>WillowTree Snapshot Repository</name>
+                    <url>${wta.repo.snapshot}</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <updatePolicy>always</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>wta.internal</id>
+                    <name>WillowTree Internal (Release) Repository</name>
+                    <url>${wta.repo.release}</url>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <localRepository>
+                /Users/joeuser/custom/path/to/mavenRepo
+            </localRepository>
+        </profile>
+
+        <profile>
+            <id>tfinternal</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <testFlightApiToken>[String - WTA api token configured in the TestFlight account.]</testFlightApiToken>
+                <testFlightTeamToken>[String - The specific TestFlight team token.]</testFlightTeamToken>
+                <testFlightDistroList>[String - Name of the TestFlight distro list.]</testFlightDistroList>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>[some other project specific profile]</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <testFlightApiToken>[String - WTA api token configured in the TestFlight account.]</testFlightApiToken>
+                <testFlightTeamToken>[String - The specific TestFlight team token.]</testFlightTeamToken>
+                <testFlightDistroList>[String - Name of the TestFlight distro list.]</testFlightDistroList>
+            </properties>
+        </profile>
+
+    </profiles>
+</settings>
