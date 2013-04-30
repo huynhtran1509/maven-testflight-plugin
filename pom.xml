@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.willowtreeapps.maven.plugins</groupId>
+    <artifactId>maven-testflight-plugin</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
+
+    <name>Sample Parameter-less Maven Plugin</name>
+    <properties>
+        <maven-plugin-api.version>3.0.5</maven-plugin-api.version>
+        <maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
+
+        <!--Test Flight Integration Dependencies-->
+        <testflight-upload-library.version>1.1.1-SNAPSHOT</testflight-upload-library.version>
+
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.willowtreeapps.testflight</groupId>
+            <artifactId>testflight-upload-library</artifactId>
+            <version>${testflight-upload-library.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.2</version>
+            <!-- Annotations are not needed for plugin execution so you can remove this dependency
+                 for execution by using provided scope. -->
+            <scope>provided</scope>
+        </dependency>
+        <!-- The help-goal generatio has a dependency on plexus-utils. -->
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>${maven-plugin-api.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>${maven-plugin-plugin.version}</version>
+                <configuration>
+                    <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
+                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                </configuration>
+                <!--The plugin descriptor file is generated and built into the jar at META-INF/maven/plugin.xml.-->
+                <executions>
+                    <execution>
+                        <id>mojo-descriptor</id>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                    <!-- For generating a help goal on this plugin. -->
+                    <execution>
+                        <id>help-goal</id>
+                        <goals>
+                            <goal>helpmojo</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
