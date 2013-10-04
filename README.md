@@ -1,6 +1,8 @@
 maven-testflight-plugin
 =======================
 
+<a href="http://willowtreeapps.github.io/maven-testflight-plugin/index.html">Site Documentation</a>
+
 Use this plugin to deploy an app to TestFlight. It requires you configure values for the following TestFlight properties:
 
 <ul>
