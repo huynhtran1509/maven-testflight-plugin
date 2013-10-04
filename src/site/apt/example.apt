@@ -1,0 +1,81 @@
+Android configuration using profiles
+
+---
+mvn clean install -Psign,testflightInternal
+---
+
+---
+<profiles>
+    <profile>
+        <id>testflightInternal</id>
+        <properties>
+            <testflight.ApiToken>your api token</testflight.ApiToken>
+            <testflight.TeamToken>your team-specific token</testflight.TeamToken>
+            <testflight.DistroList>your team-specific distro list</testflight.DistroList>
+            <testflight.NotifyDistroList>true or false</testflight.NotifyDistroList>
+            <testflight.TestFlightBuildNotes>some build notes</testflight.TestFlightBuildNotes>
+        </properties>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.willowtreeapps.maven.plugins</groupId>
+                    <artifactId>maven-testflight-plugin</artifactId>
+                    <version>${testflight-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>upload</goal>
+                            </goals>
+                            <configuration>
+                                <testFlightApiToken>${testflight.ApiToken}</testFlightApiToken>
+                                <testFlightTeamToken>${testflight.TeamToken}</testFlightTeamToken>
+                                <testFlightDistroList>${testflight.DistroList}</testFlightDistroList>
+                                <testFlightNotifyDistroList>${testflight.NotifyDistroList}</testFlightNotifyDistroList>
+                                <testFlightBuildNotes>${testflight.TestFlightBuildNotes}</testFlightBuildNotes>
+                                <filePath>${project.build.directory}/${project.build.finalName}-signed-aligned.apk</filePath>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+
+    <profile>
+        <id>testflightExternal</id>
+        <properties>
+            <testflight.ApiToken>your api token</testflight.ApiToken>
+            <testflight.TeamToken>your team-specific token</testflight.TeamToken>
+            <testflight.DistroList>your team-specific distro list</testflight.DistroList>
+            <testflight.NotifyDistroList>true or false</testflight.NotifyDistroList>
+            <testflight.TestFlightBuildNotes>some build notes</testflight.TestFlightBuildNotes>
+        </properties>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.willowtreeapps.maven.plugins</groupId>
+                    <artifactId>maven-testflight-plugin</artifactId>
+                    <version>${testflight-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>upload</goal>
+                            </goals>
+                            <configuration>
+                                <testFlightApiToken>${testflight.ApiToken}</testFlightApiToken>
+                                <testFlightTeamToken>${testflight.TeamToken}</testFlightTeamToken>
+                                <testFlightDistroList>${testflight.DistroList}</testFlightDistroList>
+                                <testFlightNotifyDistroList>${testflight.NotifyDistroList}</testFlightNotifyDistroList>
+                                <testFlightBuildNotes>${testflight.TestFlightBuildNotes}</testFlightBuildNotes>
+                                <filePath>${project.build.directory}/${project.build.finalName}-signed-aligned.apk</filePath>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+</profiles>
+---

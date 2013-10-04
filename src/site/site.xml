@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <bannerRight>
+        <name>WillowTree Apps</name>
+        <height>60</height>
+        <width>170</width>
+        <src>banner_right.png</src>
+        <href>http://www.willowtreeapps.com/</href>
+    </bannerRight>
+    <body>
+        <menu name="Overview">
+            <item name="Introduction" href="index.html"/>
+            <item name="Goals" href="plugin-info.html"/>
+        </menu>
+
+        <menu name="Examples">
+            <item name="Android" href="example.html"/>
+        </menu>
+        <menu ref="reports"/>
+    </body>
+</project>

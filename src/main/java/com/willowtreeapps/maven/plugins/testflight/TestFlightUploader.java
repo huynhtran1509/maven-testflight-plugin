@@ -11,58 +11,53 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
 public class TestFlightUploader {
     private static final String HOST = "testflightapp.com";
-
     private static final String POST = "/api/builds.json";
 
-    public UploadResult upload(UploadRequest ur) {
+    public UploadResult upload(final UploadRequest ur) throws Exception {
         UploadResult uploadResult = new UploadResult();
-        try {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            HttpHost targetHost = new HttpHost(HOST);
-            HttpPost httpPost = new HttpPost(POST);
-            FileBody fileBody = new FileBody(ur.getFile());
+        DefaultHttpClient httpClient = new DefaultHttpClient();
 
-            MultipartEntity entity = new MultipartEntity();
-            entity.addPart("api_token", new StringBody(ur.getApiToken()));
-            entity.addPart("team_token", new StringBody(ur.getTeamToken()));
-            entity.addPart("notes", new StringBody(ur.getBuildNotes()));
-            entity.addPart("file", fileBody);
+        HttpHost targetHost = new HttpHost(HOST);
+        HttpPost httpPost = new HttpPost(POST);
+        FileBody fileBody = new FileBody(ur.getFile());
 
-            if (!StringUtils.isEmpty(ur.getDistributionLists())) {
-                entity.addPart("distribution_lists", new StringBody(ur.getDistributionLists()));
-            }
+        MultipartEntity entity = new MultipartEntity();
+        entity.addPart("api_token", new StringBody(ur.getApiToken()));
+        entity.addPart("team_token", new StringBody(ur.getTeamToken()));
+        entity.addPart("notes", new StringBody(ur.getBuildNotes()));
+        entity.addPart("file", fileBody);
 
-            entity.addPart("notify", new StringBody(ur.isNotifyDistributionList() && !StringUtils.isEmpty(ur.getDistributionLists()) ? "True" : "False"));
-            entity.addPart("replace", new StringBody("True"));
-            httpPost.setEntity(entity);
+        if (!StringUtils.isEmpty(ur.getDistributionLists())) {
+            entity.addPart("distribution_lists", new StringBody(ur.getDistributionLists()));
+        }
 
-            HttpResponse response = httpClient.execute(targetHost, httpPost);
-            HttpEntity resEntity = response.getEntity();
+        entity.addPart("notify", new StringBody(ur.isNotifyDistributionList() && !StringUtils.isEmpty(ur.getDistributionLists()) ? "True" : "False"));
+        entity.addPart("replace", new StringBody("True"));
+        httpPost.setEntity(entity);
 
-            InputStream is = resEntity.getContent();
+        HttpResponse response = httpClient.execute(targetHost, httpPost);
+        HttpEntity resEntity = response.getEntity();
 
-            int statusCode = response.getStatusLine().getStatusCode();
+        InputStream is = resEntity.getContent();
 
-            if (statusCode != 200 && statusCode != 201) {
-                String responseBody = new Scanner(is).useDelimiter("\\A").next();
-                uploadResult.setSucceeded(false);
-                uploadResult.setMessage(responseBody);
-            }
+        int statusCode = response.getStatusLine().getStatusCode();
 
+        // Keeping it simple we don't really care about the JSON that comes back from a
+        // successful TestFlight upload. We just want to know if it succeeded or if it
+        // failed, and catch failure exceptions if they occur.
+        if (statusCode != 200 && statusCode != 201) {
+            String responseBody = new Scanner(is).useDelimiter("\\A").next();
+            uploadResult.setSucceeded(false);
+            uploadResult.setMessage(responseBody);
+        } else {
             uploadResult.setSucceeded(true);
             uploadResult.setMessage("The TestFlight upload was successful.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            uploadResult.setSucceeded(false);
-            uploadResult.setMessage("An error occurred with the Test Flight upload.  Check the logs.");
         }
         return uploadResult;
     }
@@ -135,14 +130,6 @@ class UploadRequest {
 class UploadResult {
     private boolean succeeded;
     private String message;
-
-    UploadResult() {
-    }
-
-    UploadResult(boolean succeeded, String message) {
-        this.succeeded = succeeded;
-        this.message = message;
-    }
 
     public boolean isSucceeded() {
         return succeeded;

@@ -1,0 +1,45 @@
+ ------
+ Introduction
+ ------
+ Author
+ ------
+ YYYY-MM-DD
+ ------
+
+
+Maven TestFlight Plugin
+
+  This plugin allows you to push a mobile application to {{{https://testflightapp.com}TestFlight}}.
+
+  If you are a JetBrains {{{http://www.jetbrains.com/teamcity/}TeamCity}} user and want to incorporate a TestFlight extension into your TeamCity projects
+  then check out the {{{https://github.com/willowtreeapps/ci-teamcity-testflight-plugin}ci-teamcity-testflight-plugin}}.
+
+* Goals Overview
+
+  There is only one goal in this plugin, upload, however this is not a 'stand alone' plugin.  It is designed to run after the project artifact is created
+  and the plugin's executions should be configured to run with either the package or install phase.
+
+  * The upload goal in this plugin gives you the ability to push a specified file to a TestFlight account.
+
+* Usage
+
+  Please refer to the {{{./example.html}Example}} to see how it should be used.
+
+  Depending on your objectives this plugin can be used to push an artifact with every build.  Optionally you can create a profile
+  that is invoked only when you choose to push an artifact.
+
+  Many TestFlight users have an 'internal' and an 'external' account where the internal account is accessed primarily by in house testers
+  and the external account might be owened by your client to which you would send a deliverable.
+
+  If you feel like the plugin is missing a feature or has a defect, you can fill a feature request or bug report in our
+  {{{https://github.com/willowtreeapps/maven-testflight-plugin/issues}issue tracker}}. When creating a new issue, please provide a comprehensive description of your
+  concern. Especially for fixing bugs it is crucial that the developers can reproduce your problem. For this reason,
+  entire debug logs, POMs or most preferably little demo projects attached to the issue are very much appreciated.
+
+
+* Examples
+
+  To provide you with better understanding of some usages of the maven-testflight-plugin,
+  you can take a look into the following examples:
+
+  * {{{./example.html}Android configuration using profiles}}
