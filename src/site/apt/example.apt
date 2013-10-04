@@ -20,7 +20,7 @@ mvn clean install -Psign,testflightInternal
                 <plugin>
                     <groupId>com.willowtreeapps.maven.plugins</groupId>
                     <artifactId>maven-testflight-plugin</artifactId>
-                    <version>${testflight-maven-plugin.version}</version>
+                    <version>1.0.3</version>
                     <executions>
                         <execution>
                             <phase>package</phase>
@@ -56,7 +56,7 @@ mvn clean install -Psign,testflightInternal
                 <plugin>
                     <groupId>com.willowtreeapps.maven.plugins</groupId>
                     <artifactId>maven-testflight-plugin</artifactId>
-                    <version>${testflight-maven-plugin.version}</version>
+                    <version>1.0.3</version>
                     <executions>
                         <execution>
                             <phase>package</phase>
