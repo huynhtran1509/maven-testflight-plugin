@@ -38,7 +38,7 @@ public class TestFlightUploader {
         }
 
         entity.addPart("notify", new StringBody(ur.isNotifyDistributionList() && !StringUtils.isEmpty(ur.getDistributionLists()) ? "True" : "False"));
-        entity.addPart("replace", new StringBody("True"));
+        entity.addPart("replace", new StringBody(ur.isReplace() ? "True" : "False"));
         httpPost.setEntity(entity);
 
         HttpResponse response = httpClient.execute(targetHost, httpPost);
@@ -67,15 +67,17 @@ class UploadRequest {
     private String apiToken, teamToken, buildNotes, distributionLists;
     private File file;
     private boolean notifyDistributionList;
+    private final boolean replace;
 
     UploadRequest(final String apiToken, final String teamToken, final String buildNotes,
-                  final String distributionLists, final File file, final boolean notifyDistributionList) {
+                  final String distributionLists, final File file, final boolean notifyDistributionList, final boolean replace) {
         this.apiToken = StringUtils.trim(apiToken);
         this.teamToken = StringUtils.trim(teamToken);
         this.buildNotes = StringUtils.trim(buildNotes);
         this.distributionLists = StringUtils.trim(distributionLists);
         this.file = file;
         this.notifyDistributionList = notifyDistributionList;
+        this.replace = replace;
     }
 
     String getApiToken() {
@@ -124,6 +126,10 @@ class UploadRequest {
 
     void setNotifyDistributionList(final boolean notifyDistributionList) {
         this.notifyDistributionList = notifyDistributionList;
+    }
+
+    public boolean isReplace() {
+        return replace;
     }
 }
 
