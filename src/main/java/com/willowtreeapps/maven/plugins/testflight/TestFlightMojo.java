@@ -80,6 +80,17 @@ public class TestFlightMojo extends AbstractMojo {
     @Parameter(property = "upload.filePath", required = true)
     private String filePath;
 
+    /**
+     * Optional, replace binary for an existing build if one is found with the same name/bundle
+     * version (defaults to true).
+     * This is not a required element to use this plugin. An example of this property's
+     * configuration is:
+     *
+     * @parameter
+     */
+    @Parameter(property = "upload.replace", required = false, defaultValue = "true")
+    private boolean replace;
+
     public void execute() throws MojoExecutionException {
 
         getLog().info("TestFlight upload is: STARTED.");
@@ -89,6 +100,7 @@ public class TestFlightMojo extends AbstractMojo {
         getLog().info(String.format("Notify distro list: %s", testFlightNotifyDistroList));
         getLog().info(String.format("Notes: %s", testFlightBuildNotes));
         getLog().info(String.format("File path: %s", filePath));
+        getLog().info(String.format("Replace: %b", replace));
 
         try {
             TestFlightUploader uploader = new TestFlightUploader();
