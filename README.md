@@ -12,6 +12,7 @@ Use this plugin to deploy an app to TestFlight. It requires you configure values
     <li>testFlightNotifyDistroList</li>
     <li>testFlightBuildNotes</li>
     <li>filePath</li>
+    <li>replace</li>
 </ul>
 
 These may be added as properties inside a project's pom.  However to avoid hard coding the tokens and checking
