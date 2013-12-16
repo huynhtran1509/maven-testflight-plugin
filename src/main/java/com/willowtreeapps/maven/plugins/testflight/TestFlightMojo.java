@@ -106,7 +106,7 @@ public class TestFlightMojo extends AbstractMojo {
             TestFlightUploader uploader = new TestFlightUploader();
             UploadRequest request = new UploadRequest(testFlightApiToken,
                     testFlightTeamToken, testFlightBuildNotes,
-                    testFlightDistroList, new File(filePath), testFlightNotifyDistroList);
+                    testFlightDistroList, new File(filePath), testFlightNotifyDistroList, replace);
 
             UploadResult result = uploader.upload(request);
             if (result.isSucceeded()) {
