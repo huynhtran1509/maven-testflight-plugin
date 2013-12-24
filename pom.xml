@@ -50,6 +50,10 @@
             <name>Andrew Shannon</name>
             <email>andrew.shannon@willowtreeapps.com</email>
         </developer>
+        <developer>
+            <name>Eric Richardson</name>
+            <email>eric.richardson@willowtreeapps.com</email>
+        </developer>
     </developers>
     <properties>
         <maven-plugin-api.version>3.0.5</maven-plugin-api.version>
