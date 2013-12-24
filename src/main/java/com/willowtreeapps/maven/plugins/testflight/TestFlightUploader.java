@@ -1,5 +1,7 @@
 package com.willowtreeapps.maven.plugins.testflight;
 
+import com.sun.java.swing.plaf.gtk.resources.gtk_it;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -102,7 +104,7 @@ class UploadRequest {
     String getBuildNotes() {
         if(buildNotes.startsWith("git log")){
             try {
-                Process process = Runtime.getRuntime().exec(buildNotes);
+                Process process = new ProcessBuilder("git", "log", "--oneline", "--since", "\"24 hours ago\"", "--no-merges").start();
                 process.waitFor();
 
                 BufferedReader reader =
@@ -111,13 +113,15 @@ class UploadRequest {
                 StringBuilder stringBuilder = new StringBuilder();
                 String line = reader.readLine();
                 while (line != null) {
-                    stringBuilder.append(line);
+                    stringBuilder.append(line).append("\n");
                     line = reader.readLine();
                 }
                 return stringBuilder.toString();
             } catch (IOException e) {
+                System.out.println(e.getMessage());
                return "";
             } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
                 return "";
             }
         }else{
