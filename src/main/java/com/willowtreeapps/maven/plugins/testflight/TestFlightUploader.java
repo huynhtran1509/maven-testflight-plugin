@@ -104,7 +104,7 @@ class UploadRequest {
     String getBuildNotes() {
         if(buildNotes.startsWith("git log")){
             try {
-                Process process = new ProcessBuilder("git", "log", "--oneline", "--since", "\"24 hours ago\"", "--no-merges").start();
+                Process process = new ProcessBuilder("git", "log", "--oneline", "--since", "\"24 hours ago\"").start();
                 process.waitFor();
 
                 BufferedReader reader =
@@ -120,6 +120,7 @@ class UploadRequest {
                 if(gitReturn.length() == 0){
                     return "No Changes";
                 }
+                stringBuilder.insert(0, "Changes: \n\n");
                 return stringBuilder.toString();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
