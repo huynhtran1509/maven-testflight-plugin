@@ -116,6 +116,10 @@ class UploadRequest {
                     stringBuilder.append(line).append("\n");
                     line = reader.readLine();
                 }
+                String gitReturn = stringBuilder.toString();
+                if(gitReturn.length() == 0){
+                    return "No Changes";
+                }
                 return stringBuilder.toString();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
