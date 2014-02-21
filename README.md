@@ -1,6 +1,11 @@
 maven-testflight-plugin
 =======================
 
+<p>
+Support for this plugin is discontinued as TestFlight has discontinued support for Android.  Please see: http://help.testflightapp.com/customer/portal/articles/1450414.
+</p>
+<p></p>
+
 <a href="http://willowtreeapps.github.io/maven-testflight-plugin/index.html">Site Documentation</a>
 
 Use this plugin to deploy an app to TestFlight. It requires you configure values for the following TestFlight properties:
