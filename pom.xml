@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.willowtreeapps.maven.plugins</groupId>
     <artifactId>maven-testflight-plugin</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.5-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
 
@@ -49,6 +49,10 @@
         <developer>
             <name>Andrew Shannon</name>
             <email>andrew.shannon@willowtreeapps.com</email>
+        </developer>
+        <developer>
+            <name>Eric Richardson</name>
+            <email>eric.richardson@willowtreeapps.com</email>
         </developer>
     </developers>
     <properties>

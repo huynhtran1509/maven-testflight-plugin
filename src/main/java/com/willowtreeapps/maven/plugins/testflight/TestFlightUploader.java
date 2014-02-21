@@ -1,5 +1,7 @@
 package com.willowtreeapps.maven.plugins.testflight;
 
+import com.sun.java.swing.plaf.gtk.resources.gtk_it;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -10,8 +12,11 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class TestFlightUploader {
@@ -97,7 +102,36 @@ class UploadRequest {
     }
 
     String getBuildNotes() {
-        return buildNotes;
+        if(buildNotes.startsWith("git log")){
+            try {
+                Process process = new ProcessBuilder("git", "log", "--oneline", "--since", "\"24 hours ago\"").start();
+                process.waitFor();
+
+                BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(
+                                process.getInputStream()));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line = reader.readLine();
+                while (line != null) {
+                    stringBuilder.append(line).append("\n");
+                    line = reader.readLine();
+                }
+                String gitReturn = stringBuilder.toString();
+                if(gitReturn.length() == 0){
+                    return "No Changes";
+                }
+                stringBuilder.insert(0, "Changes: \n\n");
+                return stringBuilder.toString();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+               return "";
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+                return "";
+            }
+        }else{
+            return buildNotes;
+        }
     }
 
     void setBuildNotes(final String buildNotes) {
